@@ -2,25 +2,29 @@ import React from "react";
 
 import TodoListItem from "../todo-list-item";
 
-const TodoList = ({ todos }) => {
-    const elements = todos.map((item) => {
-        return (
-            <li className={item.completed ? 'completed' : 'view'} key = {item.id}>
+export default class TodoList extends React.Component {
+
+    render() {
+        const { todos, onDeleted, onToggleDone } = this.props;
+
+        const elements = todos.map((item) => {
+            return (
                 <TodoListItem
                     description = {item.description}
                     created = {item.created}
+                    key = {item.id}
+                    onDeleted = {() => onDeleted(item.id)}
+                    onToggleDone = {() => onToggleDone(item.id)}
                 />
-            </li>
+            )
+        })
+    
+        return (
+            <section className="main">
+                <ul className="todo-list">
+                    { elements }
+                </ul>
+            </section>
         )
-    })
-
-    return (
-        <section className="main">
-            <ul className="todo-list">
-                { elements }
-            </ul>
-        </section>
-    )
+    }
 }
-
-export default TodoList;
