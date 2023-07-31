@@ -32,20 +32,22 @@ export default class App extends React.Component {
     }
 
     onToggleDone = (id) => {
-        this.setState(({ todoData }) => {
-          const idx = todoData.findIndex((item) => item.id === id);
-      
-          const oldItem = todoData[idx];
-          const newItem = { ...oldItem, done: !oldItem.done };
-      
-          const newArray = JSON.parse(JSON.stringify(todoData));
-          newArray[idx] = newItem;
-      
-          return {
-            todoData: newArray,
-          };
+      this.setState(({ todoData }) => {
+        const updatedTodoData = JSON.parse(JSON.stringify(todoData));
+    
+        updatedTodoData.forEach((todoItem) => {
+          if (todoItem.id === id) {
+            todoItem.done = !todoItem.done;
+          }
         });
-      };
+
+        console.log(id, updatedTodoData)
+    
+        return {
+          todoData: updatedTodoData,
+        };
+      });
+    };
   
     render() {
   
